@@ -45,7 +45,7 @@ void SuccessTost(msg)  {
 
 ScreenBackground(context) {
   return  SvgPicture.asset(
-    'assets/images/lenovo.png' ,
+    'assets/images/laptop.png' ,
     alignment: Alignment.center,
     width: MediaQuery.of(context).size.width,
     height: MediaQuery.of(context).size.height,

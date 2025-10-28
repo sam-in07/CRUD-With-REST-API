@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../RestAPI/RestClient.dart';
 import '../style/style.dart';
 
 class ProductCretationScreen extends StatefulWidget  {
@@ -33,21 +34,35 @@ class _ProductCretationScreen  extends State<ProductCretationScreen>{
     });
   }
 
-  FormOnsubmit() {
-    if(FormValues['Img']!.length==0) {
+  FormOnsubmit() async {
+    if(FormValues['Img']!.isEmpty) {
       ErrorTost("no image found ");
     }
-    else if(FormValues['Productcode']!.length==0) {
+    // String img = FormValues['Img'] ?? "";
+    //
+    // if (img.isEmpty) {
+    //   ErrorTost("No image found");
+    // } else if (!(img.toLowerCase().endsWith(".jpg") ||
+    //     img.toLowerCase().endsWith(".jpeg") ||
+    //     img.toLowerCase().endsWith(".png") ||
+    //     img.toLowerCase().endsWith(".gif"))) {
+    //   ErrorTost("Invalid image format");
+    // }
+
+    else if(FormValues['Productcode']!.isEmpty) {
       ErrorTost("no product  found ");
 
-    } else if(FormValues['ProductName']!.length==0) {
+    } else if(FormValues['ProductName']!.isEmpty) {
       ErrorTost(" ProductName needded ");
 
-    } else if(FormValues['Qty']!.length==0) {
+    }
+    else if(FormValues['Qty']!.isEmpty) {
       ErrorTost(" ProductName Qty !! ");
-    } else if(FormValues['TotalPrice']!.length==0) {
+    }
+    else if(FormValues['TotalPrice']!.isEmpty) {
       ErrorTost(" ProductName priceeeee!!1 ");
-    } else if(FormValues['UniPrice']!.length==0) {
+    }
+    else if(FormValues['UniPrice']!.isEmpty) {
       ErrorTost(" ProductName UniPrice needded ");
     }
     // } if(FormValues['Img']!.length==0) {
@@ -57,6 +72,9 @@ class _ProductCretationScreen  extends State<ProductCretationScreen>{
     // } if(FormValues['Img']!.length==0) {
     //
     // }
+    else{
+     await ProductCretateRequest (FormValues);
+    }
   }
   @override
   Widget build(BuildContext context) {

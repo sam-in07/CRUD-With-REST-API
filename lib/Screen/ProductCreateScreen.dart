@@ -21,7 +21,7 @@ class _ProductCretationScreen  extends State<ProductCretationScreen>{
     "TotalPrice" : "",
     "UniPrice" : "",
   } ;
-
+ bool Loading = false ;
   //ak func sob kaj korbo
   Inputonchnage( Mapkey , Textvalue ){
     setState(() {
@@ -36,8 +36,9 @@ class _ProductCretationScreen  extends State<ProductCretationScreen>{
 
   FormOnsubmit() async {
     if(FormValues['Img']!.isEmpty) {
-      ErrorTost("no image found ");
+      ErrorTost("Image link requried ! ");
     }
+
     // String img = FormValues['Img'] ?? "";
     //
     // if (img.isEmpty) {
@@ -73,7 +74,13 @@ class _ProductCretationScreen  extends State<ProductCretationScreen>{
     //
     // }
     else{
+      setState(() {
+        Loading = true ;
+      });
      await ProductCretateRequest (FormValues);
+      setState(() {
+        Loading = false ;
+      });
     }
   }
   @override
@@ -82,99 +89,102 @@ class _ProductCretationScreen  extends State<ProductCretationScreen>{
     return Scaffold(
       appBar: AppBar(title:  Text('Create Product'),),
       body: Stack(
-        children: [
+        children: <Widget>[
           ScreenBackground(context),
           // background grapchics
           Container(
-            child: (SingleChildScrollView (
-              padding: EdgeInsets.all(20),
+            child: Loading
+                ? const Center(
+              child: CircularProgressIndicator(),
+            )
+                : SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  TextFormField(onChanged: (Textvalue){
-                    Inputonchnage("ProductName" , Textvalue ) ;
-                    // 2 ta jinis key & value
-                  },
-                    decoration: AppInputDecoration('Product name '),
-
+                  // Product Name
+                  TextFormField(
+                    onChanged: (Textvalue) {
+                      Inputonchnage("ProductName", Textvalue);
+                    },
+                    decoration: AppInputDecoration('Product Name'),
                   ),
-                  SizedBox(height: 20,),
-                  //akekta line mjhe space ar jonno
-                  TextFormField(onChanged:  (Textvalue){
-                    Inputonchnage("Produc IMG " , Textvalue ) ;
-                    // 2 ta jinis key & value
-                  },
-                    decoration: AppInputDecoration('Product Image '),
+                  const SizedBox(height: 20),
 
+                  // Product Image (URL)
+                  TextFormField(
+                    onChanged: (Textvalue) {
+                      Inputonchnage("Img", Textvalue);
+                    },
+                    decoration: AppInputDecoration('Product Image URL'),
                   ),
-                  SizedBox(height: 20,),
-                  TextFormField(onChanged:  (Textvalue){
-                    Inputonchnage("Product unit" , Textvalue ) ;
-                    // 2 ta jinis key & value
-                  },
-                    decoration: AppInputDecoration('Product Unit prizze '),
+                  const SizedBox(height: 20),
 
+                  // Unit Price
+                  TextFormField(
+                    onChanged: (Textvalue) {
+                      Inputonchnage("UniPrice", Textvalue);
+                    },
+                    decoration: AppInputDecoration('Unit Price'),
                   ),
-                  SizedBox(height: 20,),
-                  TextFormField(onChanged:  (Textvalue){
-                    Inputonchnage("Product Code " , Textvalue ) ;
-                    // 2 ta jinis key & value
-                  },
-                    decoration: AppInputDecoration('Product code  '),
+                  const SizedBox(height: 20),
 
+                  // Product Code
+                  TextFormField(
+                    onChanged: (Textvalue) {
+                      Inputonchnage("Productcode", Textvalue);
+                    },
+                    decoration: AppInputDecoration('Product Code'),
                   ),
-                  SizedBox(height: 20,),
-                  TextFormField(onChanged:  (Textvalue){
-                    Inputonchnage("Product total prize" , Textvalue ) ;
-                    // 2 ta jinis key & value
-                  },
-                    decoration: AppInputDecoration('Product total prize  '),
+                  const SizedBox(height: 20),
 
-                  ) ,
-                  // upur nicher jonoo
-                  SizedBox(height: 20),
+                  // Total Price
+                  TextFormField(
+                    onChanged: (Textvalue) {
+                      Inputonchnage("TotalPrice", Textvalue);
+                    },
+                    decoration: AppInputDecoration('Total Price'),
+                  ),
+                  const SizedBox(height: 20),
 
+                  // Quantity Dropdown
                   Appdropdownstyle(
-
-                      DropdownButton(
-                        value: FormValues['Qty'],
-                        items: [
-                          DropdownMenuItem(child: Text('select qt') , value: '',),
-                          DropdownMenuItem(child: Text('1 pis ') , value: '1 pis',) ,
-                          DropdownMenuItem(child: Text('2 pis') , value: '2 pis ',),
-                          DropdownMenuItem(child: Text(' 3 pis ') , value: '3 pis ',),
-                          DropdownMenuItem(child: Text('4 pis') , value: '4 pis ',),
-                          DropdownMenuItem(child: Text('5 pis ') , value: '5 piss',),
-                        ]
-
-                        , onChanged:  (Textvalue){
-                        Inputonchnage("Qty" , Textvalue ) ;
-                        // 2 ta jinis key & value
+                    DropdownButton(
+                      value: FormValues['Qty'],
+                      items: const [
+                        DropdownMenuItem(child: Text('Select Qty'), value: ''),
+                        DropdownMenuItem(child: Text('1 piece'), value: '1'),
+                        DropdownMenuItem(child: Text('2 pieces'), value: '2'),
+                        DropdownMenuItem(child: Text('3 pieces'), value: '3'),
+                        DropdownMenuItem(child: Text('4 pieces'), value: '4'),
+                        DropdownMenuItem(child: Text('5 pieces'), value: '5'),
+                      ],
+                      onChanged: (Textvalue) {
+                        Inputonchnage("Qty", Textvalue);
                       },
-                        underline: Container() ,
-                        isExpanded: true,
-                        //x exix borabor expends hoi jabe
-
-                      )
-
+                      underline: Container(),
+                      isExpanded: true,
+                    ),
                   ),
 
-                  SizedBox(height: 20),
-                  // buttton ta left to right pura space ta nibe Container dey shape
-                  Container(
-                    child: ElevatedButton(
-                        style: AppButtonstyle(),
-                        onPressed: () {
-                          FormOnsubmit();
-                        },
-                        // child: Text("submit")),
-                        child: SuccessButtonChild("submit")),
-                    // SuccessButtonChild vitore akta  pura button ar design ase
+                  const SizedBox(height: 20),
 
-                  )
+                  // Submit Button
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: AppButtonstyle(),
+                      onPressed: () {
+                        FormOnsubmit();
+                      },
+                      child: SuccessButtonChild("Submit"),
+                    ),
+                  ),
                 ],
               ),
-            )),
+            ),
           )
+
+
         ],
       ),
       /*

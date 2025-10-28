@@ -1,0 +1,92 @@
+ Container(
+            child: (SingleChildScrollView (
+              padding: EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  TextFormField(onChanged: (Textvalue){
+                    Inputonchnage("ProductName" , Textvalue ) ;
+                    // 2 ta jinis key & value
+                  },
+                    decoration: AppInputDecoration('Product name '),
+
+                  ),
+                  SizedBox(height: 20,),
+                  //akekta line mjhe space ar jonno
+                  TextFormField(onChanged:  (Textvalue){
+                    Inputonchnage("Img", Textvalue);
+
+                    // 2 ta jinis key & value
+                  },
+                    decoration: AppInputDecoration('Product Image '),
+
+                  ),
+                  SizedBox(height: 20,),
+                  TextFormField(onChanged:  (Textvalue){
+                    Inputonchnage("Product unit" , Textvalue ) ;
+                    // 2 ta jinis key & value
+                  },
+                    decoration: AppInputDecoration('Product Unit prizze '),
+
+                  ),
+                  SizedBox(height: 20,),
+                  TextFormField(onChanged:  (Textvalue){
+                    Inputonchnage("Productcode", Textvalue);
+
+                    // 2 ta jinis key & value
+                  },
+                    decoration: AppInputDecoration('Product code  '),
+
+                  ),
+                  SizedBox(height: 20,),
+                  TextFormField(onChanged:  (Textvalue){
+                    Inputonchnage("Product total prize" , Textvalue ) ;
+                    // 2 ta jinis key & value
+                  },
+                    decoration: AppInputDecoration('Product total prize  '),
+
+                  ) ,
+                  // upur nicher jonoo
+                  SizedBox(height: 20),
+
+                  Appdropdownstyle(
+
+                      DropdownButton(
+                        value: FormValues['Qty'],
+                        items: [
+                          DropdownMenuItem(child: Text('select qt') , value: '',),
+                          DropdownMenuItem(child: Text('1 pis ') , value: '1 pis',) ,
+                          DropdownMenuItem(child: Text('2 pis') , value: '2 pis ',),
+                          DropdownMenuItem(child: Text(' 3 pis ') , value: '3 pis ',),
+                          DropdownMenuItem(child: Text('4 pis') , value: '4 pis ',),
+                          DropdownMenuItem(child: Text('5 pis ') , value: '5 piss',),
+                        ]
+
+                        , onChanged:  (Textvalue){
+                        Inputonchnage("Qty" , Textvalue ) ;
+                        // 2 ta jinis key & value
+                      },
+                        underline: Container() ,
+                        isExpanded: true,
+                        //x exix borabor expends hoi jabe
+
+                      )
+
+                  ),
+
+                  SizedBox(height: 20),
+                  // buttton ta left to right pura space ta nibe Container dey shape
+                  Container(
+                    child: ElevatedButton(
+                        style: AppButtonstyle(),
+                        onPressed: () {
+                          FormOnsubmit();
+                        },
+                        // child: Text("submit")),
+                        child: SuccessButtonChild("submit")),
+                    // SuccessButtonChild vitore akta  pura button ar design ase
+
+                  )
+                ],
+              ),
+            )),
+          )

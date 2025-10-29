@@ -10,6 +10,14 @@ const colorblue = Color.fromRGBO(28, 65, 231, 1.0);
 const colorgreen = Color.fromRGBO(31, 231, 28, 1.0);
 const colorwhite = Color.fromRGBO(255, 255 , 255 , 1);
 
+SliverGridDelegateWithFixedCrossAxisCount ProductGridViewStyle() {
+   return SliverGridDelegateWithFixedCrossAxisCount(
+     crossAxisCount: 2,
+     mainAxisSpacing: 2,
+     crossAxisSpacing: 250,
+   );
+}
+
 
 
 void ErrorTost (msg) {

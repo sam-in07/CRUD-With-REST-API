@@ -45,3 +45,23 @@ Future<bool> ProductCretateRequest (FormValues) async {
     return false ;
   }
 }
+
+Future<bool> ProductDeleteRequest(id) async {
+  var URL = Uri.parse("https://crud.devnextech.com/api/v1/DeleteProduct/$id");
+  var PostHeader = {"Content-Type": "application/json"};
+
+  var response = await http.get(URL, headers: PostHeader);
+
+  var ResultCode = response.statusCode;
+  var ResultBody = json.decode(response.body);
+
+  if(ResultCode==200 && ResultBody['status']=="success" ) {
+    SuccessTost("Request Succes");
+    return true;
+  }
+  else {
+    ErrorTost("Request fail : try again");
+    return false ;
+  }
+}
+

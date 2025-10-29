@@ -52,9 +52,12 @@ GridView(
 অর্থাৎ, এটা দিয়ে তুমি ঠিক করো **গ্রিডে কয়টা কলাম ও কেমন স্পেসিং থাকবে।**
 
 _Swep to Re fresh_ 
-refresh part just upor niche referesh 
+refresh part just upor niche referesh
+[Here ](assets/images/git_readme/img_3.png)
 
-[Imp first step](assets/images/git_readme/img_1.png)
+[Imp first step](assets/images/git_readme/img_1.png) 
+
+[Delete IMP](assets/images/git_readme/delete.png)
 
 
 

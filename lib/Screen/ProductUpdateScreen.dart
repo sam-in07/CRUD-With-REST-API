@@ -5,8 +5,14 @@ import 'package:flutter/material.dart';
 
 import '../RestAPI/RestClient.dart';
 import '../style/style.dart';
+import '';
+import 'ProductGridViewScreen.dart';
 
 class ProductUpdateScreen extends StatefulWidget  {
+  final Map productItem ;
+  const ProductUpdateScreen(this.productItem);
+
+
   @override
   State<ProductUpdateScreen> createState()  => _ProductCretationScreen ();
 }
@@ -23,6 +29,18 @@ class _ProductCretationScreen  extends State<ProductUpdateScreen>{
   } ;
   bool Loading = false ;
   //ak func sob kaj korbo
+
+    void initState() {
+     setState(() {
+       FormValues.update("Img", (value) => widget.productItem['Img']) ;
+       FormValues.update("ProductCode", (value) => widget.productItem['ProductCode']) ;
+       FormValues.update("ProductName", (value) => widget.productItem['ProductName']) ;
+       FormValues.update("Qty", (value) => widget.productItem['Qty']) ;
+       FormValues.update("TotalPrice", (value) =>widget.productItem['TotalPrice']) ;
+       FormValues.update("UnitPrice", (value) => widget.productItem['UnitPrice']) ;
+     });
+    }
+
   Inputonchnage( Mapkey , Textvalue ){
     setState(() {
       //FormValues  property gulake updte korbo
@@ -77,10 +95,19 @@ class _ProductCretationScreen  extends State<ProductUpdateScreen>{
       setState(() {
         Loading = true ;
       });
-      await ProductCretateRequest (FormValues);
-      setState(() {
-        Loading = false ;
-      });
+      await ProductUpdateRequest (FormValues , widget.productItem['_id']);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Productgridviewscreen(FormValues),
+        ),
+            (Route<dynamic> route) => false,
+      );
+
+      // setState(() {
+      //   Loading = false ;
+      // });
+
     }
   }
   @override
@@ -103,6 +130,7 @@ class _ProductCretationScreen  extends State<ProductUpdateScreen>{
                 children: [
                   // Product Name
                   TextFormField(
+                    initialValue: FormValues['ProductName'],
                     onChanged: (Textvalue) {
                       Inputonchnage("ProductName", Textvalue);
                     },
@@ -112,6 +140,7 @@ class _ProductCretationScreen  extends State<ProductUpdateScreen>{
 
                   // Product Image (URL)
                   TextFormField(
+                    initialValue: FormValues['Img'],
                     onChanged: (Textvalue) {
                       Inputonchnage("Img", Textvalue);
                     },
@@ -121,6 +150,7 @@ class _ProductCretationScreen  extends State<ProductUpdateScreen>{
 
                   // Unit Price
                   TextFormField(
+                    initialValue: FormValues['UniPrice'],
                     onChanged: (Textvalue) {
                       Inputonchnage("UniPrice", Textvalue);
                     },
@@ -130,6 +160,7 @@ class _ProductCretationScreen  extends State<ProductUpdateScreen>{
 
                   // Product Code
                   TextFormField(
+                    initialValue:FormValues['Productcode'],
                     onChanged: (Textvalue) {
                       Inputonchnage("Productcode", Textvalue);
                     },
@@ -139,6 +170,7 @@ class _ProductCretationScreen  extends State<ProductUpdateScreen>{
 
                   // Total Price
                   TextFormField(
+                    initialValue: FormValues['TotalPrice'],
                     onChanged: (Textvalue) {
                       Inputonchnage("TotalPrice", Textvalue);
                     },

@@ -7,7 +7,10 @@ import '../style/style.dart';
 import 'ProductUpdateScreen.dart';
 
 class Productgridviewscreen extends StatefulWidget {
-  const Productgridviewscreen({super.key});
+  final  Map productItem;
+  const Productgridviewscreen(this.productItem);
+
+//   Productgridviewscreen({super.key, required this.productItem});
 
   @override
   State<Productgridviewscreen> createState() => _ProductgridviewscreenState();
@@ -68,10 +71,10 @@ class _ProductgridviewscreenState extends State<Productgridviewscreen> {
       },
     );
   }
-  GotoUpdate(context) {
+  GotoUpdate(context,productItem) {
     Navigator.push(context,
         MaterialPageRoute(builder: (context) =>
-            ProductUpdateScreen()));
+            ProductUpdateScreen(productItem)));
 
   }
 
@@ -117,7 +120,7 @@ class _ProductgridviewscreenState extends State<Productgridviewscreen> {
                                   children: [
                                     OutlinedButton(onPressed: () {
                                    //   Navigator.push(context, MaterialPageRoute(builder: (context) => ProductUpdateScreen()));
-                                      GotoUpdate(context);
+                                      GotoUpdate(context, ProductList[index]);
                                     },
                                         child: Icon(CupertinoIcons.ellipsis_vertical_circle
                                           , size: 18 , color: colorRed,)),

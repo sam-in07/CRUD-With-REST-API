@@ -4,7 +4,23 @@ import 'package:rest_api/Screen/ProductCreateScreen.dart';
 import 'package:rest_api/style/style.dart';
 
 
-ProductGridViewLIstRequest(){
+Future<List>   ProductGridViewListRequest() async {
+  //project exution pore futre a kaj korbe
+  var URL = Uri.parse("https://crud.teamrabbil.com/api/v1/ReadProduct");
+  var PostHeader = {
+    "Content-Type": "application/json"
+  };
+  var response =  await  http.get(URL,headers: PostHeader);
+  var ResultCode = response.statusCode;
+  var ResultBody = json.decode(response.body);
+  if(ResultCode==200 && ResultBody['status']=="success" ) {
+    SuccessTost("Request Success");
+    return ResultBody['data'];
+  }
+  else {
+    ErrorTost("Request fail : try again");
+    return [] ;
+  }
 
 }
 

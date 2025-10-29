@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rest_api/RestAPI/RestClient.dart';
+import 'package:rest_api/Screen/ProductCreateScreen.dart';
 
 import '../style/style.dart';
+import 'ProductUpdateScreen.dart';
 
 class Productgridviewscreen extends StatefulWidget {
   const Productgridviewscreen({super.key});
@@ -29,6 +31,48 @@ class _ProductgridviewscreenState extends State<Productgridviewscreen> {
       isloading = false ;
 
     });
+  }
+
+  DeleteItem(id) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Delete!"),
+          content: Text("Once deleted, you can't get it back."),
+          actions: [
+            OutlinedButton(
+              onPressed: () async {
+                // SuccessTost(id) ;
+             // var result =
+                Navigator.pop(context);
+                setState(() {
+                  isloading = true ;
+                });
+               await   ProductDeleteRequest(id);
+               // setState(() {
+               //   isloading = true ;
+               // });
+               await CallData();
+              },
+              child: Text('Yes'),
+            ),
+            OutlinedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('No'),
+            ),
+          ],
+        ); // AlertDialog
+      },
+    );
+  }
+  GotoUpdate(context) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) =>
+            ProductUpdateScreen()));
+
   }
 
   @override
@@ -72,13 +116,14 @@ class _ProductgridviewscreenState extends State<Productgridviewscreen> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     OutlinedButton(onPressed: () {
-
+                                   //   Navigator.push(context, MaterialPageRoute(builder: (context) => ProductUpdateScreen()));
+                                      GotoUpdate(context);
                                     },
                                         child: Icon(CupertinoIcons.ellipsis_vertical_circle
                                           , size: 18 , color: colorRed,)),
                                     SizedBox(width: 4,),
                                     OutlinedButton(onPressed: () {
-
+                                         DeleteItem(ProductList[index]['_id']);
                                     },
                                         child: Icon(CupertinoIcons.delete)),
                                   ],
@@ -98,8 +143,15 @@ class _ProductgridviewscreenState extends State<Productgridviewscreen> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ProductCretationScreen()));
+        },
+        child: Icon(Icons.add),
+      )
     );
   }
 
 
 }
+

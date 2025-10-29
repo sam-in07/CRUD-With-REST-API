@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import '../RestAPI/RestClient.dart';
 import '../style/style.dart';
 
-class ProductCretationScreen extends StatefulWidget  {
+class ProductUpdateScreen extends StatefulWidget  {
   @override
-  State<ProductCretationScreen> createState()  => _ProductCretationScreen ();
+  State<ProductUpdateScreen> createState()  => _ProductCretationScreen ();
 }
 // view ney kaj kore
-class _ProductCretationScreen  extends State<ProductCretationScreen>{
+class _ProductCretationScreen  extends State<ProductUpdateScreen>{
   //api modhe key & val 2 tai string
   Map<String,String> FormValues = {
     "Img" : "",
@@ -21,7 +21,7 @@ class _ProductCretationScreen  extends State<ProductCretationScreen>{
     "TotalPrice" : "",
     "UniPrice" : "",
   } ;
- bool Loading = false ;
+  bool Loading = false ;
   //ak func sob kaj korbo
   Inputonchnage( Mapkey , Textvalue ){
     setState(() {
@@ -77,7 +77,7 @@ class _ProductCretationScreen  extends State<ProductCretationScreen>{
       setState(() {
         Loading = true ;
       });
-     await ProductCretateRequest (FormValues);
+      await ProductCretateRequest (FormValues);
       setState(() {
         Loading = false ;
       });
@@ -187,7 +187,6 @@ class _ProductCretationScreen  extends State<ProductCretationScreen>{
 
         ],
       ),
-
       /*
       Stack is a layout widget. It overlaps its children on top of each other — like layers.
       Think of it like a pile of widgets, where each one can be positioned on top of the previous ones.

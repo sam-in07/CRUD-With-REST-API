@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rest_api/RestAPI/RestClient.dart';
 
@@ -38,26 +39,67 @@ class _ProductgridviewscreenState extends State<Productgridviewscreen> {
           ScreenBackground(context),
           Container(
             child: isloading
-                ? Center(child: CircularProgressIndicator())
-                : GridView.builder(
-              gridDelegate: ProductGridViewStyle(),
-              itemCount: 10, // কতগুলো item দেখাবে
-              itemBuilder: (context, index) {
-                return Card(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                       children: [
-                         Expanded(child: Image.network(ProductList[index]['Img'] , fit: BoxFit.fill) ),
-                       ],
-                  ),
+                ? const Center(child: CircularProgressIndicator())
+                : RefreshIndicator(
+                child: GridView.builder(
+                  gridDelegate: ProductGridViewStyle(),
+                  itemCount: ProductList.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(
+                            child: Image.network(
+                              ProductList[index]['Img'],
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.fromLTRB(5, 5, 5,5),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  ProductList[index]['ProductName'],
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 7,) ,
+                                Text("Price : " + ProductList[index]['UnitPrice'] + " BDT ") ,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    OutlinedButton(onPressed: () {
 
-                );
-              },
-            ),
+                                    },
+                                        child: Icon(CupertinoIcons.ellipsis_vertical_circle
+                                          , size: 18 , color: colorRed,)),
+                                    SizedBox(width: 4,),
+                                    OutlinedButton(onPressed: () {
+
+                                    },
+                                        child: Icon(CupertinoIcons.delete)),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                onRefresh: () async {
+                  await CallData();
+                }
+            )
           ),
         ],
       ),
     );
   }
+
 
 }
